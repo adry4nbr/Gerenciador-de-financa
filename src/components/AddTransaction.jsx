@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "./Input";
 import { v4 as uuidv4 } from "uuid";
+import { Plus } from "lucide-react";
 
 function AddTransaction({ onAdd }) {
   const [tipo, setTipo] = useState("receita");
@@ -9,16 +10,19 @@ function AddTransaction({ onAdd }) {
   const [nome, setNome] = useState("");
   const [valor, setValor] = useState("");
   const [categoria, setCategoria] = useState("");
-  const [data, setData] = useState("");
+  const [data, setData] = useState(new Date().toISOString().split("T")[0]);
 
   return (
     <div className="size-full flex justify-end items-center gap-4 ">
       {/* botão para criar uma nova transação */}
       <button
         onClick={() => setIsOpen(true)}
-        className="bg-cyan-400 rounded-2xl px-4 py-2 text-white font-bold hover:bg-blue-500 transition-colors"
+        className="flex items-center gap-3 bg-cyan-500 hover:bg-cyan-600 transition-all text-white text-sm font-bold px-3 py-2 rounded-2xl shadow-lg"
       >
-        Nova Transação
+        <div className="flex items-center justify-center size-4 rounded-full border-2 border-white">
+          <Plus size={20} strokeWidth={3} />
+        </div>
+        <span className="hidden md:inline text-sm">Nova Transação</span>
       </button>
 
       {/* Quando ele abrir */}
@@ -111,13 +115,21 @@ function AddTransaction({ onAdd }) {
                     : "bg-red-500 border-red-600 hover:bg-red-700"
                 }`}
                 onClick={() => {
+                  if (
+                    !nome.trim() ||
+                    Number(valor) <= 0 ||
+                    !categoria.trim() ||
+                    !data.trim()
+                  ) {
+                    return alert("Prencha todos os campos");
+                  }
                   const NovaTransacao = {
-                    id: uuidv4(), // Vou colocar uma biblioteca para fazer isso depois
-                    nome: nome,
-                    valor: valor,
-                    categoria: categoria,
-                    data: data,
-                    tipo: tipo,
+                    id: uuidv4(),
+                    nome,
+                    valor,
+                    categoria,
+                    data,
+                    tipo,
                   };
 
                   onAdd(NovaTransacao);
