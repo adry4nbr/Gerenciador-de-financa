@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "./Input";
 import { v4 as uuidv4 } from "uuid";
 import { Plus } from "lucide-react";
 
-function AddTransaction({ onAdd }) {
+function AddTransaction({
+  onAdd,
+  editTransaction,
+  setEditTransaction,
+  onUpdate,
+}) {
   const [tipo, setTipo] = useState("receita");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,11 +17,67 @@ function AddTransaction({ onAdd }) {
   const [categoria, setCategoria] = useState("");
   const [data, setData] = useState(new Date().toISOString().split("T")[0]);
 
+  useEffect(() => {
+    if (editTransaction) {
+      setNome(editTransaction.nome);
+      setValor(editTransaction.valor);
+      setCategoria(editTransaction.categoria);
+      setData(editTransaction.data);
+      setTipo(editTransaction.tipo);
+      setIsOpen(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editTransaction]);
+
+  // Função para fechar e limpar
+  const handleClose = () => {
+    setIsOpen(false);
+    setEditTransaction(null); // Limpa quem estava editando
+    setNome("");
+    setValor(""); // Limpa os campos
+  };
+
+  const handleSubmit = () => {
+    if (
+      !nome.trim() ||
+      Number(valor) <= 0 ||
+      !categoria.trim() ||
+      !data.trim()
+    ) {
+      return alert("Preencha todos os campos");
+    }
+
+    const transacaoDados = {
+      id: editTransaction ? editTransaction.id : uuidv4(), // Mantém o ID se estiver editando
+      nome,
+      valor,
+      categoria: categoria.trim().toLocaleLowerCase(),
+      data,
+      tipo,
+    };
+
+    if (editTransaction) {
+      onUpdate(transacaoDados); // Chama a função que atualiza a lista no App
+    } else {
+      onAdd(transacaoDados); // Chama a função que adiciona um novo
+    }
+
+    handleClose();
+  };
+
   return (
     <div className="size-full flex justify-end items-center gap-4 ">
       {/* botão para criar uma nova transação */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setEditTransaction(null);
+          setNome("");
+          setValor("");
+          setCategoria("");
+          setTipo("receita");
+          setData(new Date().toISOString().split("T")[0]);
+          setIsOpen(true); // Abre o modal à força!
+        }}
         className="flex items-center gap-3 bg-cyan-500 hover:bg-cyan-600 transition-all text-white text-sm font-bold px-3 py-2 rounded-2xl shadow-lg"
       >
         <div className="flex items-center justify-center size-4 rounded-full border-2 border-white">
@@ -37,7 +98,7 @@ function AddTransaction({ onAdd }) {
           {/* Card do Formulário */}
           <div className="relative w-125 bg-white rounded-2xl justify-center items-center">
             <h1 className="p-4 font-bold border-b border-gray-200 flex justify-center text-xl">
-              Nova Transação
+              {editTransaction ? "Editar Transação" : "Nova Transação"}
             </h1>
 
             {/*Botões de Receita e Despesa  */}
@@ -110,38 +171,11 @@ function AddTransaction({ onAdd }) {
               {/* botão de adicionar */}
               <button
                 className={`flex text-white rounded-xl py-2 px-18 my-6 border border-gray-200 justify-center ${
-                  tipo === "receita"
-                    ? "bg-green-500 border-green-600 hover:bg-green-600"
-                    : "bg-red-500 border-red-600 hover:bg-red-700"
+                  tipo === "receita" ? "bg-green-500" : "bg-red-500"
                 }`}
-                onClick={() => {
-                  if (
-                    !nome.trim() ||
-                    Number(valor) <= 0 ||
-                    !categoria.trim() ||
-                    !data.trim()
-                  ) {
-                    return alert("Prencha todos os campos");
-                  }
-                  const NovaTransacao = {
-                    id: uuidv4(),
-                    nome,
-                    valor,
-                    categoria,
-                    data,
-                    tipo,
-                  };
-
-                  onAdd(NovaTransacao);
-                  setIsOpen(false);
-
-                  setNome("");
-                  setValor("");
-                  setCategoria("");
-                  setData("");
-                }}
+                onClick={handleSubmit} // AQUI: Usamos a nova função que trata os dois casos
               >
-                Adicionar Transação
+                {editTransaction ? "Salvar Alterações" : "Adicionar Transação"}
               </button>
             </div>
           </div>

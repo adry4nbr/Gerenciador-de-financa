@@ -1,28 +1,17 @@
-function Meses() {
-  const listaMeses = [
-    "Janeiro",
-    "Fevereiro",
-    "Março",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-
+function Meses({ mesAtivo, setMesAtivo, listaMeses }) {
   return (
-    // O w-full garante que ele ocupe a largura da tela
     <div className="w-full px-4">
-      {/* Aqui aplicamos o scroll no contêiner interno */}
-      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide py-4 gap-4 md:gap-10 justify-start md:justify-center">
-        {listaMeses.map((mes) => (
+      <div className="flex w-full overflow-x-auto whitespace-nowrap scrollbar-hide py-4 gap-4 md:gap-10 justify-start">
+        {listaMeses.map((mes, index) => (
           <div
             key={mes}
-            className="border border-gray-500 bg-white px-4 py-1 rounded-full shrink-0 cursor-pointer hover:bg-gray-100 transition-colors"
+            onClick={() => setMesAtivo(index)} // AQUI: Muda o mês no App.jsx
+            className={`px-4 py-1 rounded-full cursor-pointer transition-colors border
+              ${
+                mesAtivo === index
+                  ? "bg-cyan-500 text-white border-cyan-600" // Estilo Ativo
+                  : "bg-white text-gray-700 border-gray-500 hover:bg-gray-100" // Estilo Inativo
+              }`}
           >
             {mes}
           </div>

@@ -12,7 +12,7 @@ function App() {
       nome: "Teste-1",
       valor: "250",
       tipo: "receita",
-      categoria: "Teste",
+      categoria: "Salário",
       data: "2025-09-22",
     },
     {
@@ -20,7 +20,7 @@ function App() {
       nome: "Teste2",
       valor: "550",
       tipo: "despesa",
-      categoria: "Teste",
+      categoria: "Alimentação",
       data: "2025-09-22",
     },
     {
@@ -28,7 +28,7 @@ function App() {
       nome: "Teste3",
       valor: "350",
       tipo: "receita",
-      categoria: "Teste",
+      categoria: "Transporte",
       data: "2025-09-22",
     },
     {
@@ -36,7 +36,7 @@ function App() {
       nome: "Teste4",
       valor: "750",
       tipo: "receita",
-      categoria: "Teste",
+      categoria: "Moradia",
       data: "2025-09-22",
     },
     {
@@ -44,7 +44,7 @@ function App() {
       nome: "Teste-5",
       valor: "150",
       tipo: "despesa",
-      categoria: "Teste",
+      categoria: "Educação",
       data: "2025-09-22",
     },
   ]);
@@ -53,27 +53,91 @@ function App() {
     setTransaction([nova, ...transaction]);
   };
 
+  const [editTransaction, setEditTransaction] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  function onEditTransaction(transaction) {
+    setEditTransaction(transaction);
+    setRefreshKey((prev) => prev + 1); // Incrementa para forçar o re-render
+  }
+  //  Função para ATUALIZAR (a nova lógica)
+  const updateTransaction = (transacaoAtualizada) => {
+    setTransaction(
+      transaction.map((t) =>
+        t.id === transacaoAtualizada.id ? transacaoAtualizada : t,
+      ),
+    );
+    setEditTransaction(null); // Limpa o estado após salvar
+  };
+  // Função para DELETAR
+  function onDeleteTransactionClick(transactionId) {
+    const newTransactions = transaction.filter((t) => t.id !== transactionId);
+    setTransaction(newTransactions);
+  }
+
+  const [mesAtivo, setMesAtivo] = useState(new Date().getMonth());
+
+  // Filtro automático baseado no mês ativo
+  const transacoesFiltradas = transaction.filter((t) => {
+    const mesDaTransacao = new Date(t.data).getMonth();
+    return mesDaTransacao === mesAtivo;
+  });
+
+  const LISTA_MESES = [
+    "Janeiro",
+    "Fevereiro",
+    "Março",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+
   return (
     <div className="w-full min-h-screen  flex flex-col bg-gray-100">
       <header className="w-full h-18 flex items-center justify-between px-6 border-b border-gray-300 bg-white">
         <Title>Gerenciador de Finanças</Title>
-        <AddTransaction onAdd={adicionarTransaction} />
+        <AddTransaction
+          key={`${editTransaction?.id || "novo"}-${refreshKey}`}
+          onAdd={adicionarTransaction}
+          editTransaction={editTransaction}
+          setEditTransaction={setEditTransaction}
+          onUpdate={updateTransaction}
+        />
       </header>
 
       <nav>
-        <Meses />
+        <Meses
+          mesAtivo={mesAtivo}
+          setMesAtivo={setMesAtivo}
+          listaMeses={LISTA_MESES}
+        />
       </nav>
 
       <main>
-        <Dashbord transactions={transaction} />
+        <Dashbord
+          transacoesFiltradas={transacoesFiltradas}
+          transactions={transaction}
+          nomeMes={LISTA_MESES[mesAtivo]}
+        />
 
         <section className="flex w-full max-h-95">
           <div className="w-2/5"></div>
-          <History transactions={transaction} />
+          <History
+            transactions={transacoesFiltradas} // Somente o mês selecionado
+            onEditTransaction={onEditTransaction}
+            onDeleteTransactionClick={onDeleteTransactionClick}
+            nomeMes={LISTA_MESES[mesAtivo]}
+          />
         </section>
       </main>
 
-      <footer className="w-full h-22"></footer>
+      <footer className="w-full h-14"></footer>
     </div>
   );
 }

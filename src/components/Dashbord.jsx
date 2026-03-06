@@ -1,18 +1,27 @@
 import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
 
-function Dashbord({ transactions = [] }) {
-  const receitas = transactions.filter((t) => t.tipo === "receita").length;
-  const despesas = transactions.filter((t) => t.tipo === "despesa").length;
+function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
+  const receitas = transacoesFiltradas.filter(
+    (t) => t.tipo === "receita",
+  ).length;
+  const despesas = transacoesFiltradas.filter(
+    (t) => t.tipo === "despesa",
+  ).length;
 
-  const receita = transactions
+  // 1. Saldo Total (considerando TUDO, ignorando o mês)
+  const saldoTotal = transactions.reduce((acc, t) => {
+    return t.tipo === "receita" ? acc + Number(t.valor) : acc - Number(t.valor);
+  }, 0);
+
+  // 2. Entradas do Mês (usando apenas o que foi filtrado)
+  const entradasMes = transacoesFiltradas
     .filter((t) => t.tipo === "receita")
     .reduce((acc, t) => acc + Number(t.valor), 0);
 
-  const despesa = transactions
+  // 3. Saídas do Mês
+  const saidasMes = transacoesFiltradas
     .filter((t) => t.tipo === "despesa")
     .reduce((acc, t) => acc + Number(t.valor), 0);
-
-  const saldoTotal = receita - despesa;
 
   const formatarMoeda = (valor) => {
     return new Intl.NumberFormat("pt-BR", {
@@ -50,7 +59,9 @@ function Dashbord({ transactions = [] }) {
       <div className="flex flex-col border border-gray-300 w-full md:w-1/3 h-4/5 rounded-2xl bg-white">
         {/* Topo do card */}
         <div className="flex w-full h-1/2 ">
-          <span className="flex w-1/2 p-6 text-slate-500 ">Entradas - Mês</span>
+          <span className="flex w-1/2 p-6 text-slate-500 ">
+            Entradas - {nomeMes}
+          </span>
 
           <span className="flex w-1/2 justify-end p-6">
             <div className="flex items-center size-10 p-2 bg-green-100 rounded-full">
@@ -61,7 +72,7 @@ function Dashbord({ transactions = [] }) {
         {/* Resto do card */}
         <div className="flex flex-col w-full h-1/2 gap-1">
           <span className="px-6 text-2xl text-green-500">
-            {formatarMoeda(receita)}
+            {formatarMoeda(entradasMes)}
           </span>
           <span className="px-6 text-xs pb-2 text-gray-500">
             {receitas} receitas
@@ -73,7 +84,9 @@ function Dashbord({ transactions = [] }) {
       <div className="flex flex-col border border-gray-300 w-full md:w-1/3 h-4/5 rounded-2xl bg-white">
         {/* Topo do card */}
         <div className="flex w-full h-1/2 ">
-          <span className="flex w-1/2 p-6 text-slate-500 ">Saídas - Mês</span>
+          <span className="flex w-1/2 p-6 text-slate-500 ">
+            Saídas - {nomeMes}
+          </span>
           <span className="flex w-1/2 justify-end p-6">
             <div className="flex items-center size-10 p-2 bg-red-100 rounded-full">
               <TrendingDown size={24} className="text-red-500" />
@@ -83,7 +96,7 @@ function Dashbord({ transactions = [] }) {
         {/* Resto do card */}
         <div className="flex flex-col w-full h-1/2 gap-1">
           <span className="px-6 text-2xl text-red-500">
-            {formatarMoeda(despesa)}
+            {formatarMoeda(saidasMes)}
           </span>
           <span className="px-6 text-xs pb-2 text-gray-500">
             {despesas} despesas
