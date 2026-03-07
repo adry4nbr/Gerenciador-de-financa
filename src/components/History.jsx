@@ -12,9 +12,25 @@ function History({
     return `${dia}/${mes}/${ano}`;
   };
 
+  if (!transactions || transactions.length === 0) {
+    return (
+      <div className="flex flex-col w-full md:w-3/5 h-44 md:my-4 md:ml-2 md:mr-4 rounded-2xl border border-slate-300 bg-white p-4 items-center justify-center">
+        <header className="flex w-full h-12 items-center p-4 ">
+          <h2 className="w-4/5 font-medium">Historico - {nomeMes} </h2>
+          <p className="flex w-1/5 justify-end text-xs text-gray-500">
+            {transactions.length} Transações
+          </p>
+        </header>
+        <p className="flex text-gray-600 size-full justify-center items-center">
+          Nenhuma transação nesse mês.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col w-3/5 min-h-44 my-4 md:my-0 mx-4 rounded-2xl border border-slate-300 bg-white">
-      <header className="flex w-full h-12 items-center p-4  ">
+    <div className="flex flex-col w-full md:w-3/5 max-h-95 md:min-h-44  md:my-0 md:ml-2 md:mr-4 rounded-2xl border border-slate-300 bg-white">
+      <header className="flex w-full h-12 items-center p-4 ">
         <h2 className="w-4/5 font-medium">Historico - {nomeMes} </h2>
         <p className="flex w-1/5 justify-end text-xs text-gray-500">
           {transactions.length} Transações

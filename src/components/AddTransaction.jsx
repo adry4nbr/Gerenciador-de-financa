@@ -26,7 +26,7 @@ function AddTransaction({
       setTipo(editTransaction.tipo);
       setIsOpen(true);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     /// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editTransaction]);
 
   // Função para fechar e limpar

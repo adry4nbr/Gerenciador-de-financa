@@ -4,6 +4,7 @@ import Title from "./components/Title";
 import History from "./components/History";
 import Dashbord from "./components/Dashbord";
 import Meses from "./components/Meses";
+import Grafic from "./components/Grafic";
 
 function App() {
   const [transaction, setTransaction] = useState([
@@ -11,9 +12,9 @@ function App() {
       id: "teste-123",
       nome: "Teste-1",
       valor: "250",
-      tipo: "receita",
+      tipo: "despesa",
       categoria: "Salário",
-      data: "2025-09-22",
+      data: "2025-03-22",
     },
     {
       id: "teste-2",
@@ -21,23 +22,23 @@ function App() {
       valor: "550",
       tipo: "despesa",
       categoria: "Alimentação",
-      data: "2025-09-22",
+      data: "2025-03-22",
     },
     {
       id: "teste-3",
       nome: "Teste3",
       valor: "350",
-      tipo: "receita",
+      tipo: "despesa",
       categoria: "Transporte",
-      data: "2025-09-22",
+      data: "2025-03-22",
     },
     {
       id: "teste-4",
       nome: "Teste4",
       valor: "750",
-      tipo: "receita",
+      tipo: "despesa",
       categoria: "Moradia",
-      data: "2025-09-22",
+      data: "2025-03-22",
     },
     {
       id: "teste-5",
@@ -45,7 +46,7 @@ function App() {
       valor: "150",
       tipo: "despesa",
       categoria: "Educação",
-      data: "2025-09-22",
+      data: "2025-03-22",
     },
   ]);
 
@@ -126,8 +127,12 @@ function App() {
           nomeMes={LISTA_MESES[mesAtivo]}
         />
 
-        <section className="flex w-full max-h-95">
-          <div className="w-2/5"></div>
+        <section className="flex flex-col px-4 md:px-0 md:flex-row w-full max-h-95">
+          <Grafic
+            transactions={transacoesFiltradas || []}
+            nomeMes={LISTA_MESES[mesAtivo]}
+          />
+          {/* Historio=co de transação */}
           <History
             transactions={transacoesFiltradas} // Somente o mês selecionado
             onEditTransaction={onEditTransaction}

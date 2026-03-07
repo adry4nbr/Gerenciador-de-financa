@@ -45,8 +45,12 @@ function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
           </span>
         </div>
         {/* Resto do card */}
+        {/* Resto do card */}
         <div className="flex flex-col w-full h-1/2 gap-1">
-          <span className="px-6 text-2xl text-cyan-400">
+          {/* A classe muda dinamicamente entre text-cyan-400 e text-red-500 */}
+          <span
+            className={`px-6 text-2xl ${saldoTotal < 0 ? "text-red-500" : "text-cyan-400"}`}
+          >
             {formatarMoeda(saldoTotal)}
           </span>
           <span className="px-6 pb-2 text-xs text-gray-500">
