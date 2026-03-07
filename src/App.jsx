@@ -1,54 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTransaction from "./components/AddTransaction";
 import Title from "./components/Title";
 import History from "./components/History";
 import Dashbord from "./components/Dashbord";
 import Meses from "./components/Meses";
 import Grafic from "./components/Grafic";
+import Links from "./components/Links";
 
 function App() {
-  const [transaction, setTransaction] = useState([
-    {
-      id: "teste-123",
-      nome: "Teste-1",
-      valor: "250",
-      tipo: "despesa",
-      categoria: "Salário",
-      data: "2025-03-22",
-    },
-    {
-      id: "teste-2",
-      nome: "Teste2",
-      valor: "550",
-      tipo: "despesa",
-      categoria: "Alimentação",
-      data: "2025-03-22",
-    },
-    {
-      id: "teste-3",
-      nome: "Teste3",
-      valor: "350",
-      tipo: "despesa",
-      categoria: "Transporte",
-      data: "2025-03-22",
-    },
-    {
-      id: "teste-4",
-      nome: "Teste4",
-      valor: "750",
-      tipo: "despesa",
-      categoria: "Moradia",
-      data: "2025-03-22",
-    },
-    {
-      id: "teste-5",
-      nome: "Teste-5",
-      valor: "150",
-      tipo: "despesa",
-      categoria: "Educação",
-      data: "2025-03-22",
-    },
-  ]);
+  const [transaction, setTransaction] = useState(() => {
+    const salvas = localStorage.getItem("minhas-transacoes");
+    return salvas ? JSON.parse(salvas) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("minhas-transacoes", JSON.stringify(transaction));
+  }, [transaction]);
 
   const adicionarTransaction = (nova) => {
     setTransaction([nova, ...transaction]);
@@ -99,9 +66,24 @@ function App() {
     "Dezembro",
   ];
 
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // 2. Este efeito garante que o HTML e o Estado estejam SEMPRE iguais
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]); // Sempre que isDarkMode mudar, ele atualiza o HTML
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
-    <div className="w-full min-h-screen  flex flex-col bg-gray-100">
-      <header className="w-full h-18 flex items-center justify-between px-6 border-b border-gray-300 bg-white">
+    <div className="w-full min-h-screen  flex flex-col bg-gray-100 dark:bg-slate-900">
+      <header className="w-full h-18 flex items-center justify-between px-6 border-b border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800">
         <Title>Gerenciador de Finanças</Title>
         <AddTransaction
           key={`${editTransaction?.id || "novo"}-${refreshKey}`}
@@ -109,6 +91,8 @@ function App() {
           editTransaction={editTransaction}
           setEditTransaction={setEditTransaction}
           onUpdate={updateTransaction}
+          isDarkMode={isDarkMode}
+          toggleTheme={toggleDarkMode}
         />
       </header>
 
@@ -120,14 +104,14 @@ function App() {
         />
       </nav>
 
-      <main>
+      <main className="grow">
         <Dashbord
           transacoesFiltradas={transacoesFiltradas}
           transactions={transaction}
           nomeMes={LISTA_MESES[mesAtivo]}
         />
 
-        <section className="flex flex-col px-4 md:px-0 md:flex-row w-full max-h-95">
+        <section className="flex flex-col px-4 md:px-0 md:flex-row w-full">
           <Grafic
             transactions={transacoesFiltradas || []}
             nomeMes={LISTA_MESES[mesAtivo]}
@@ -142,7 +126,9 @@ function App() {
         </section>
       </main>
 
-      <footer className="w-full h-14"></footer>
+      <footer>
+        <Links />
+      </footer>
     </div>
   );
 }

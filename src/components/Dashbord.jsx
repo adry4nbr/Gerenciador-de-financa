@@ -33,13 +33,15 @@ function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
   return (
     <div className="flex flex-col md:flex-row w-full h-auto md:h-44 gap-4 px-4">
       {/* Saldo total   */}
-      <div className="flex flex-col border border-gray-300 w-full md:w-1/3 h-4/5 rounded-2xl bg-white">
+      <div className="flex flex-col border border-gray-300 dark:border-slate-700 w-full md:w-1/3 h-4/5 rounded-2xl bg-white dark:bg-slate-800">
         {/* Topo do card */}
         <div className="flex w-full h-1/2 ">
-          <span className="flex w-1/2 p-6 text-slate-500 ">Saldo Total</span>
+          <span className="flex w-1/2 p-6 text-slate-500 dark:text-slate-400">
+            Saldo Total
+          </span>
           {/* Icon de maleta */}
           <span className="flex w-1/2 justify-end p-6">
-            <div className="flex items-center size-10 p-2 bg-cyan-100 rounded-full">
+            <div className="flex items-center size-10 p-2 dark:bg-cyan-900 bg-cyan-100 rounded-full">
               <Wallet size={24} className="text-cyan-400" />
             </div>
           </span>
@@ -53,23 +55,23 @@ function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
           >
             {formatarMoeda(saldoTotal)}
           </span>
-          <span className="px-6 pb-2 text-xs text-gray-500">
+          <span className="px-6 pb-2 text-xs text-gray-400">
             Todas as transações
           </span>
         </div>
       </div>
 
       {/* Entradas */}
-      <div className="flex flex-col border border-gray-300 w-full md:w-1/3 h-4/5 rounded-2xl bg-white">
+      <div className="flex flex-col border border-gray-300 dark:border-slate-700 w-full md:w-1/3 h-4/5 rounded-2xl bg-white dark:bg-slate-800">
         {/* Topo do card */}
         <div className="flex w-full h-1/2 ">
-          <span className="flex w-1/2 p-6 text-slate-500 ">
+          <span className="flex w-1/2 p-6 text-slate-500 dark:text-slate-400 ">
             Entradas - {nomeMes}
           </span>
 
           <span className="flex w-1/2 justify-end p-6">
-            <div className="flex items-center size-10 p-2 bg-green-100 rounded-full">
-              <TrendingUp size={24} className="text-green-500" />
+            <div className="flex items-center size-10 p-2 dark:bg-emerald-800 bg-green-100  rounded-full">
+              <TrendingUp size={24} className="text-green-500 " />
             </div>
           </span>
         </div>
@@ -78,21 +80,21 @@ function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
           <span className="px-6 text-2xl text-green-500">
             {formatarMoeda(entradasMes)}
           </span>
-          <span className="px-6 text-xs pb-2 text-gray-500">
+          <span className="px-6 text-xs pb-2 text-gray-400">
             {receitas} receitas
           </span>
         </div>
       </div>
 
       {/* Saida */}
-      <div className="flex flex-col border border-gray-300 w-full md:w-1/3 h-4/5 rounded-2xl bg-white">
+      <div className="flex flex-col border border-gray-300 dark:border-slate-700 w-full md:w-1/3 h-4/5 rounded-2xl bg-white dark:bg-slate-800">
         {/* Topo do card */}
         <div className="flex w-full h-1/2 ">
-          <span className="flex w-1/2 p-6 text-slate-500 ">
+          <span className="flex w-1/2 p-6 text-slate-500 dark:text-slate-400 ">
             Saídas - {nomeMes}
           </span>
           <span className="flex w-1/2 justify-end p-6">
-            <div className="flex items-center size-10 p-2 bg-red-100 rounded-full">
+            <div className="flex items-center size-10 p-2 dark:bg-rose-950 bg-red-100 rounded-full">
               <TrendingDown size={24} className="text-red-500" />
             </div>
           </span>
@@ -102,7 +104,7 @@ function Dashbord({ transactions, transacoesFiltradas, nomeMes }) {
           <span className="px-6 text-2xl text-red-500">
             {formatarMoeda(saidasMes)}
           </span>
-          <span className="px-6 text-xs pb-2 text-gray-500">
+          <span className="px-6 text-xs pb-2 text-gray-400">
             {despesas} despesas
           </span>
         </div>

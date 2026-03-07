@@ -41,7 +41,7 @@ function Grafic({ nomeMes, transactions = [] }) {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="flex bg-white border border-gray-200 p-3 rounded-2xl shadow-lg text-sm gap-1">
+        <div className="flex bg-white dark:bg-slate-800 border  border-gray-200  p-3 rounded-2xl shadow-lg text-sm gap-1">
           <p className="font-bold">{payload[0].name} :</p>
           <p className="text-red-500">
             {new Intl.NumberFormat("pt-BR", {
@@ -57,16 +57,20 @@ function Grafic({ nomeMes, transactions = [] }) {
 
   if (dadosProcessados.length === 0) {
     return (
-      <div className="flex flex-col w-full md:w-2/5 h-44 my-4 md:mr-2 md:ml-4 rounded-2xl border border-slate-300 bg-white p-4 items-center">
-        <h2 className="w-full font-medium">Gastos por Categoria - {nomeMes}</h2>
-        <p className="text-gray-400 mt-10">Nenhuma despesa este mês.</p>
+      <div className="flex flex-col w-full md:w-2/5 min-h-44 my-4 md:my-0 md:mr-2 md:ml-4 rounded-2xl border gap-12 dark:border-slate-700 border-slate-300 bg-white dark:bg-slate-800 p-4 items-center">
+        <h2 className="w-full font-medium dark:text-white">
+          Gastos por Categoria - {nomeMes}
+        </h2>
+        <p className="text-gray-400 ">Nenhuma despesa este mês.</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col w-full md:w-2/5 md:min-h-44 min-h-85 my-4 md:my-0 md:mr-2 md:ml-4 rounded-2xl border border-slate-300 bg-white">
-      <h2 className="p-4 font-medium">Gastos por Categoria - {nomeMes}</h2>
+    <div className="flex flex-col w-full md:w-2/5 md:min-h-44 min-h-85 my-4 md:my-0 md:mr-2 md:ml-4 rounded-2xl border dark:border-slate-700 border-slate-300 bg-white dark:bg-slate-800">
+      <h2 className="p-4 font-medium dark:text-white">
+        Gastos por Categoria - {nomeMes}
+      </h2>
 
       <ResponsiveContainer width="100%" height={230}>
         <PieChart>
@@ -99,7 +103,7 @@ function Grafic({ nomeMes, transactions = [] }) {
               style={{ backgroundColor: entry.color }}
             />
             {/* Nome da categoria */}
-            <span className="text-gray-600 capitalize">{entry.name}</span>
+            <span className="text-gray-400 capitalize">{entry.name}</span>
           </div>
         ))}
       </div>
