@@ -32,10 +32,10 @@ UUID: Geração de identificadores únicos para as transações.
 📂 Estrutura do Projeto
 Plaintext
 src/
- ├── components/       # Componentes reutilizáveis (History, Dashboard, Grafic, etc.)
- ├── App.jsx           # Componente principal com a lógica de estado global
- ├── index.css         # Configurações globais do Tailwind v4
- └── main.jsx          # Ponto de entrada da aplicação
+ components/       # Componentes reutilizáveis (History, Dashboard, Grafic, etc.)
+ App.jsx           # Componente principal com a lógica de estado global
+ index.css         # Configurações globais do Tailwind v4
+ main.jsx          # Ponto de entrada da aplicação
 ⚙️ Como Executar o Projeto
 Clone o repositório:
 
