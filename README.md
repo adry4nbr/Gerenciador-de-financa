@@ -1,69 +1,94 @@
-💰 Gerenciador de Finanças Pessoais
-Um aplicativo web moderno e intuitivo para controle financeiro, desenvolvido com React + Vite e Tailwind CSS v4. O projeto permite o monitoramento de receitas e despesas, visualização de dados através de gráficos e suporte total a temas claro e escuro.
+---
+# 💰 Gerenciador de Finanças Pessoais
 
-🚀 Funcionalidades Principal
-📦 Gestão Completa de Transações (CRUD): Adicione, edite, visualize e exclua receitas e despesas de forma simples.
+Um aplicativo web moderno e intuitivo para controle financeiro, desenvolvido com **React + Vite** e **Tailwind CSS v4**. O projeto permite o monitoramento de receitas e despesas, visualização de dados através de gráficos e suporte total a temas claro e escuro.
+---
 
-📊 Dashboard Inteligente: Visualize seu saldo total e o resumo de entradas e saídas específicas do mês selecionado.
+## 🚀 Funcionalidades Principais
 
-📈 Gráficos Interativos: Visualização detalhada de gastos por categoria utilizando a biblioteca Recharts.
+- **Gestão de Transações (CRUD):** Adicione, edite, visualize e exclua receitas e despesas de forma simples.
+- **Dashboard Inteligente:** Visualize seu saldo total e o resumo de entradas e saídas específicas do mês selecionado.
+- **Gráficos Interativos:** Visualização específica de gastos por categoria utilizando a biblioteca Recharts.
+- **Filtro por Período:** Navegação entre os meses do ano para um histórico organizado.
+- **Modo Escuro:** Interface adaptável com troca dinâmica de temas e persistência de preferência.
+- **Persistência de Dados:** Suas transações ficam salvas localmente no navegador (LocalStorage).
 
-📅 Filtro por Período: Navegação entre os meses do ano para um histórico organizado.
+---
 
-🌗 Modo Escuro (Dark Mode): Interface adaptável com troca dinâmica de temas e persistência de preferência.
+## 🛠️ Tecnologias Utilizadas
 
-💾 Persistência de Dados: Suas transações ficam salvas localmente no navegador (LocalStorage), sem perda de dados ao atualizar a página.
+- **React:** Biblioteca principal para interface.
+- **Vite:** Ferramenta de construção para o ambiente de desenvolvimento.
+- **Tailwind CSS v4:** Estilização moderna e responsiva.
+- **Lucide React:** Conjunto de ícones minimalistas.
+- **Recharts:** Biblioteca para geração de gráficos.
+- **UUID:** Geração de identificadores exclusivos para transações.
 
-🛠️ Tecnologias Utilizadas
-O projeto foi construído utilizando as melhores práticas de desenvolvimento web atual:
+---
 
-React: Biblioteca principal para a interface.
+## 📂 Estrutura do Projeto
 
-Vite: Build tool ultra-rápida para o ambiente de desenvolvimento.
-
-Tailwind CSS v4: Estilização baseada em utilitários e variáveis modernas.
-
-Lucide React: Conjunto de ícones minimalistas e consistentes.
-
-Recharts: Biblioteca de gráficos para visualização de dados.
-
-UUID: Geração de identificadores únicos para as transações.
-
-📂 Estrutura do Projeto
-Plaintext
+```text
 src/
-├── components/ # Componentes reutilizáveis (History, Dashboard, Grafic, etc.)
-├── App.jsx # Componente principal com a lógica de estado global
-├── index.css # Configurações globais do Tailwind v4
-└── main.jsx # Ponto de entrada da aplicação
-⚙️ Como Executar o Projeto
-Clone o repositório:
+  ├── components/    # Componentes (History, Dashboard, Grafic, etc.)
+  ├── App.jsx        # Lógica de estado global
+  ├── index.css      # Configurações do Tailwind v4
+  └── main.jsx       # Ponto de entrada
 
-Bash
+```
+
+---
+
+## ⚙️ Como Executar o Projeto
+
+1. **Clone o repositório:**
+
+```bash
 git clone https://github.com/seu-usuario/nome-do-repositorio.git
-Entre na pasta do projeto:
 
-Bash
+```
+
+2. **Entre na pasta do projeto:**
+
+```bash
 cd nome-do-repositorio
-Instale as dependências:
 
-Bash
+```
+
+3. **Instale as dependências:**
+
+```bash
 npm install
-Inicie o servidor de desenvolvimento:
 
-Bash
+```
+
+4. **Inicie o servidor:**
+
+```bash
 npm run dev
-Acesse http://localhost:5173 no seu navegador.
 
-👥Desenvolvimento
-Este projeto foi desenvolvido por uma unica pessoa:
+```
 
-Pesquisa e Conteúdo: Estruturação das regras de negócio financeiras.
+5. **Ou Entre nesse domínio:**
 
-Design e Mídia: UI/UX e implementação do Dark Mode com Tailwind.
+```
+https://gerenciador-de-financa.vercel.app/
 
-Apresentação e Interação: Lógica de componentes e gráficos.
+```
 
-Relatórios: Documentação técnica e README.
+---
 
-Nota: Desenvolvido por Adryan Galdino Soares - 2026.
+## 👤 Desenvolvimento
+
+Este projeto foi desenvolvido integralmente por:
+
+**Adryan Galdino Soares** (2026)
+
+Atuando nas frentes de:
+
+- Estruturação de regras de negócio.
+- Design UI/UX e Implementação de Dark Mode.
+- Lógica de componentes e integração de gráficos.
+- Documentação técnica.
+
+---
